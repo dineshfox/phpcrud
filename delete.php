@@ -11,7 +11,7 @@ try {
     // delete query
     $sql = "DELETE FROM users WHERE id=$id";
     if ($conn->query($sql) === TRUE) {
-      echo "Record deleted successfully";
+    //   echo "Record deleted successfully";
       header('Location: index.php?action=deleted');
 
       

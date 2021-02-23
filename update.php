@@ -25,13 +25,32 @@ try {
     }
 
 }
+
 // show error
 catch(PDOException $exception){
     die('ERROR: ' . $exception->getMessage());
 }
 
-?>
+if (isset($_POST['update'])){
+    $fname =  $_POST["fname"];
+    $lname =  $_POST["lname"];
+    $email =  $_POST["email"];
 
+    $sql = "UPDATE users
+    SET firstname = '$fname', lastname = '$lname' , email = '$email' 
+    WHERE id=$id ";
+
+    if ($conn->query($sql) === TRUE) {
+      echo "Update record successfully"."<br>";
+      header('Location: index.php?action=updated');
+    } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+}
+
+
+?>
 
 
 <!doctype html>
@@ -51,23 +70,27 @@ catch(PDOException $exception){
 
     <div class="container">
         <br>
-        <h4 class="text-center">Add User Information </h4>
+        <h4 class="text-center">Update User Information </h4>
         <br>
         <form method="post">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">First  Name</label>
-                <input type="text" name="fname" class="form-control" id="exampleInputEmail1" aria-describedby="fname" placeholder="<?php echo $fname; ?>">
+                <input type="text" name="fname" value="<?php echo $fname; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="fname" placeholder="<?php echo $fname; ?>">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                <input type="text" name="lname" class="form-control" id="exampleInputEmail1" aria-describedby="lname" placeholder="<?php echo $lname; ?>">
+                <input type="text" name="lname" value="<?php echo $lname; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="lname" placeholder="<?php echo $lname; ?>">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="<?php echo $email; ?>">
+                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control" id="email" placeholder="<?php echo $email; ?>">
             </div>
-            <a href='index.php' class='btn btn-info'>Go Back</a>
+            <button type="submit" name="update" class="btn btn-primary">Update</button>
+            <a href='index.php' class='btn btn-secondary'>Go Back</a>
         </form> 
+        <p></p>
+        
+
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->

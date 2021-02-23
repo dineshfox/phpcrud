@@ -17,8 +17,6 @@ include "dbconnection.php";
 //       echo "Error creating table: " . $conn->error;
 //     }
     
-// $conn->close();
-
 // $sql = "INSERT INTO users (firstname, lastname, email)
 // VALUES ('dinesh', 'lewis', 'dinesh@example.com')";
 
@@ -27,8 +25,6 @@ include "dbconnection.php";
 // } else {
 //   echo "Error: " . $sql . "<br>" . $conn->error;
 // }
-
-// $conn->close();
 
 
 // sql to delete a record
@@ -40,7 +36,7 @@ include "dbconnection.php";
 //   echo "Error deleting record: " . $conn->error;
 // }
 
-// $conn->close();
+
 
 // $sql = "UPDATE users SET lastname='dinesh' WHERE id=1";
 
@@ -51,18 +47,18 @@ include "dbconnection.php";
 // }
 
 
-if(isset($_POST['insert'])){
-    $message= "The insert function is called.";
-    echo $message;
-}
-if(isset($_POST['select'])){
-    $message="The select function is called.";
-    echo $message;
-}
+// if(isset($_POST['insert'])){
+//     $message= "The insert function is called.";
+//     echo $message;
+// }
+// if(isset($_POST['select'])){
+//     $message="The select function is called.";
+//     echo $message;
+// }
 
+// $conn->close();
 
 ?>  
-
 
 <!doctype html>
 <html lang="en">
@@ -74,24 +70,25 @@ if(isset($_POST['select'])){
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <title>User Details</title>
+    <title>User Details CRUD</title>
   </head>
   <body>
     
 
     <?php
         echo "<div class="."container".">";
+        echo "<br>";  
         echo "<h4 class="."text-center".">User Information </h4>";
         echo "<br>";    
 
-
         $action = isset($_GET['action']) ? $_GET['action'] : "";
  
-        // if it was redirected from delete.php
+        // if it was redirected from delete.php or update.php
         if($action=='deleted'){
-            echo "<div class='alert alert-success'>Record was deleted.</div>";
+            echo "<div class='alert alert-danger'>Record was deleted.</div>";
+        }elseif($action=='updated'){ 
+            echo "<div class='alert alert-success'>Record was Updated.</div>";
         }
-
 
         echo "<table class="."table table-Light".">";
         echo "<thead>";
@@ -126,8 +123,8 @@ if(isset($_POST['select'])){
         echo "<td>".$row["email"]."</td>";
         echo "<td>".$row["reg_date"]."</td>";
         echo "<td>";
-        echo "<a href='read.php?id=".$row["id"]."' class='btn btn-info m-r-1em'>Read</a>";
-        echo "<a href='#' class='btn btn-primary m-r-1em'>Edit</a>";
+        echo "<a href='read.php?id=".$row["id"]."' class='btn btn-info m-r-1em'>Read </a>";
+        echo "<a href='update.php?id=".$row["id"]."' class='btn btn-primary m-r-1em'>Update</a>";
         echo "<a href='#' onclick='delete_user({$row["id"]});' class='btn btn-danger m-r-1em'>Delete</a>";
         echo "</td>";
   
@@ -146,14 +143,14 @@ if(isset($_POST['select'])){
 
     ?>
 
-    <form  method="post">
+    <!-- <form  method="post">
         <input type="submit" name="insert" value="insert">
         <input type="submit" name="select" value="select" >
-    </form>
+    </form> -->
 
 
     <div class="container">
-        <a href='add.php' class='btn btn-info'>Add New User</a>
+        <a href='add.php' class='btn btn-secondary'>Add New User</a>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
